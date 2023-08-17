@@ -18,6 +18,11 @@ let ItemImages = {
     "Aromatherapy Essential Oil Diffuser": require('../assets/OilDiffuser.jpeg')
 }
 
+let Background ={
+    "background": require('../assets/Background.jpeg')
+}
+
 export {
-    ItemImages
+    ItemImages,
+    Background
 }

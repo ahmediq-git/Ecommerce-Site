@@ -1,10 +1,11 @@
-
-import ProductCard from './components/ProductCard'
+import React, { lazy, Suspense } from 'react';
+import Landing from './pages/Landing/Landing'
+import ErrorPage from './pages/error-boundary/ErrorPage'
 
 function App() {
   return (
     <div className="App">
-      <ProductCard productName={"Silicone Food Storage Bags Set"} price={500}/>
+      <ErrorPage/>
     </div>
   );
 }

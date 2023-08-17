@@ -1,6 +1,6 @@
-export const INCREMENT_QUANTITY = "INCREMENT_QUANTITY";
-export const DECREMENT_QUANTITY = "DECREMENT_QUANTITY";
-export const ADD_TO_CART = "ADD_TO_CART";
-export const REMOVE_FROM_CART = "ADD_TO_CART";
-export const GET_ITEMS = "GET_ITEMS";
+export const ADD_TO_CART = "ADD_TO_CART"; //increments quantity in cart
+export const REMOVE_FROM_CART = "REMOVE_FROM_CART"; //decrements quantity in cart
+export const GET_CART = "GET_CART"; // retrieves all items from the cart for a particular user
 
+export const GET_STORE = "GET_STORE"; // retrieves all items from the store
+export const UPDATE_STORE = "UPDATE_STORE"; // Updates the store with new available quantities

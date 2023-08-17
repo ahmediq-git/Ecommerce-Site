@@ -1,12 +1,10 @@
 import {combineReducers} from '@reduxjs/toolkit'
 import cart from './reducers/CartReducers'
-import retrieve from './reducers/GetReducers'
-import quantity from './reducers/QuantityReducers'
+import market from './reducers/StoreReducers'
 
 const rootReducer = combineReducers({
     cart,
-    retrieve,
-    quantity,
+    market,
 });
 
 export default rootReducer;
