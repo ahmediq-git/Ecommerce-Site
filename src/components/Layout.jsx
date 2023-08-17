@@ -1,9 +1,14 @@
-const Layout = (Component)=>{
-    return (
-        <div>
-            <Component/>
-        </div>
-    );
+import Navbar from './Navbar'
+
+const layout = (Component)=>{
+    return function Layout(props){
+        return(
+            <div >
+                <Navbar/>
+                <Component {...props}/>
+            </div>
+        )
+    }
 }
 
-export default Layout;
+export default layout;

@@ -7,8 +7,8 @@ const ProductCard = (props) => {
       <Card
         sx={{
             display: 'flex',
-            width: 400,
-            height: 300,
+            width: 270,
+            height: 200,
             borderRadius: 3,
             justifyContent: 'center',
             alignItems: 'center',
@@ -28,17 +28,17 @@ const ProductCard = (props) => {
           <img
             src={ItemImages[props.productName]}
             style={{
-              width: 150,
-              height: 150,
+              width: 100,
+              height: 100,
               objectFit: "cover",
               borderTopLeftRadius: 3,
               borderBottomLeftRadius: 3,
             }}
           />
-          <Typography sx={{ fontSize: 20, fontWeight: "bold" }}>
+          <Typography sx={{ fontSize: 14, fontWeight: "bold" }}>
             {props.productName}
           </Typography>
-          <Typography sx={{fontSize: 16}}>{props.price} PKR</Typography>
+          <Typography sx={{fontSize: 12}}>{props.price} PKR</Typography>
         </Box>
       </Card>
     </div>

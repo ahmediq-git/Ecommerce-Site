@@ -5,7 +5,6 @@ const initialState = {
   products: data
 };
 
-//TODO: FIX, increment should be according to add and remove from cart.
 const storeReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_STORE:
