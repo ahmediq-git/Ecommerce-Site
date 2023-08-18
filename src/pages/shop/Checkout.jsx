@@ -11,6 +11,7 @@ import {
   Typography,
   Button
 } from "@mui/material";
+import {useRef, useEffect} from 'react'
 
 function createData(date, totalprice) {
   return { date, totalprice };
@@ -21,6 +22,13 @@ const rows = [
 ];
 
 function Checkout() {
+  // Renderchecker
+  const count = useRef(0);
+  useEffect(() => {
+      count.current = count.current + 1;
+  });
+
+  
   return (
     <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop: 100, flexDirection:'column'}}>
     <h2 style={{color: "#660000"}}>Thank you for shopping with us</h2>
@@ -49,6 +57,8 @@ function Checkout() {
       </Table>
     </TableContainer>
     <Typography sx={{marginTop:3}}>Total Spent: 123</Typography>
+    <div>Rendered: {count.current}</div> 
+    {/* Renderchecker */}
     </div>
   );
 }

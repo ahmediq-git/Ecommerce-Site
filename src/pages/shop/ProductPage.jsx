@@ -1,8 +1,15 @@
 import {Typography, Button} from '@mui/material'
 import {ItemImages} from '../../utils/ImageExport'
 import Layout from '../../components/Layout'
+import {useRef, useEffect} from 'react'
 
 const ProductPage = (props)=>{
+     // Renderchecker
+     const count = useRef(0);
+     useEffect(() => {
+         count.current = count.current + 1;
+     });
+ 
     return(
         <div style={{display: 'flex', flexDirection:'row', marginTop:100}}>
             <div style={{margin:20, border:'2px solid black'}}>
@@ -33,6 +40,8 @@ const ProductPage = (props)=>{
                 </div>
 
                 <Button variant='contained' sx={{fontSize: 16, fontWeight:'bold', backgroundColor: '#FFA500'}}>Add to Cart</Button>
+                <div>Rendered: {count.current}</div> 
+                {/* Renderchecker */}
             </div>
         </div>
     );

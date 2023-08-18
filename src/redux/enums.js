@@ -4,3 +4,4 @@ export const GET_CART = "GET_CART"; // retrieves all items from the cart for a p
 
 export const GET_STORE = "GET_STORE"; // retrieves all items from the store
 export const UPDATE_STORE = "UPDATE_STORE"; // Updates the store with new available quantities
+export const GET_STORE_WITH_FILTERS="GET_STORE_WITH_FILTERS"

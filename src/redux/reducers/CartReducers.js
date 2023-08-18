@@ -54,7 +54,7 @@ const cartReducer = (state = initialState, action) => {
       }
 
     case GET_CART:
-      return state.cart;
+      return state.cart; 
 
     default:
       return state;

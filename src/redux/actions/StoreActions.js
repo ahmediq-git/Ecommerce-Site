@@ -1,4 +1,4 @@
-import {GET_STORE, UPDATE_STORE} from '../enums';
+import {GET_STORE, UPDATE_STORE, GET_STORE_WITH_FILTERS} from '../enums';
 
 export const getItems = () => {
   return {
@@ -14,3 +14,15 @@ export const updateStore = (cart) => {
     }
   };
 };
+
+export const getStoreWithFilters = (name, minPrice, maxPrice, colors) => {
+  return {
+    type: GET_STORE_WITH_FILTERS,
+    payload:{
+      name,
+      minPrice,
+      maxPrice,
+      colors
+    }
+  }
+}

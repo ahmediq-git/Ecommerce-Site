@@ -1,6 +1,12 @@
 import Layout from '../../components/Layout'
 import Filter from '../../components/Filter'
 import ProductCard from '../../components/ProductCard'
+import {useState, useRef, useEffect} from 'react'
+
+import {connect} from 'react-redux'
+import {getItems} from '../../redux/CombinedActions'
+
+import {useDispatch, useSelector} from 'react-redux'
 
 const GridDisplay = ({ arr }) => {
     const gridContainerStyle = {
@@ -25,13 +31,37 @@ const GridDisplay = ({ arr }) => {
     );
   };
 
-const Homepage = ()=>{
-    const arr=Array(100).fill(<ProductCard productName={"Aromatherapy Essential Oil Diffuser"} price={300}/>)
+const Homepage = ({products})=>{
 
+  // Renderchecker
+    const count = useRef(0);
+    useEffect(() => {
+        count.current = count.current + 1;
+    });
+
+    const [name, setName]=useState('')
+    const [min, setMin]=useState(0)
+    const [max, setMax]=useState(0)
+    const [colors, setColors]=useState([])
+    
+
+    const handleFilter=(name, minPrice, maxPrice, colors)=>{
+        setName(name)
+        setMin(minPrice)
+        setMax(maxPrice)
+        setColors(colors)
+    }
+    console.log(products)
+    const arr=products.map((product, index)=><div key={index}><ProductCard productName={product.name} price={product.price}/></div>)
+
+    // console.log(arr)
     return(
         <div style={{ display: 'flex', margin: 20, flexDirection: 'row' }}>
+
             <div style={{ position: 'fixed', top: 90 }}>
-                 <Filter/>
+            <div>Rendered: {count.current}</div> 
+            {/* Renderchecker */}
+                 <Filter filters={handleFilter}/>
             </div>
             <div style={{ position: 'absolute', left: 300, top: 90}}>
                 {<GridDisplay arr={arr}/>}
@@ -40,4 +70,8 @@ const Homepage = ()=>{
     );
 }
 
-export default Layout(Homepage);
+const mapStateToProps = (state) => ({
+  products: state.market.products,
+});
+
+export default Layout(connect(mapStateToProps)(Homepage));

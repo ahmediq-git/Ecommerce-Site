@@ -12,6 +12,8 @@ import {
   Button
 } from "@mui/material";
 
+import {useRef, useEffect} from 'react'
+
 function createData(name, price, quantity) {
   return { name, price, quantity };
 }
@@ -23,6 +25,11 @@ const rows = [
 ];
 
 function ShoppingCart() {
+   // Renderchecker
+   const count = useRef(0);
+   useEffect(() => {
+       count.current = count.current + 1;
+   });
   return (
     <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop: 100, flexDirection:'column'}}>
     <h1>Shopping Cart</h1>
@@ -53,6 +60,8 @@ function ShoppingCart() {
     </TableContainer>
     <Typography sx={{marginTop:3}}>Total Cost: 123</Typography>
     <Button variant="contained" sx={{marginTop:3, backgroundColor: '#FFA500'}}>Proceed to Checkout</Button>
+    <div>Rendered: {count.current}</div> 
+    {/* Renderchecker */}
     </div>
   );
 }
