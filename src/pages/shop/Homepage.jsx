@@ -36,19 +36,7 @@ const Homepage = ({products})=>{
     useEffect(() => {
         count.current = count.current + 1;
     });
-
-    const [name, setName]=useState('')
-    const [min, setMin]=useState(0)
-    const [max, setMax]=useState(0)
-    const [colors, setColors]=useState([])
-    
-
-    const handleFilter=(name, minPrice, maxPrice, colors)=>{
-        setName(name)
-        setMin(minPrice)
-        setMax(maxPrice)
-        setColors(colors)
-    }
+  
 
     const arr=useMemo(()=>products.map((product, index)=><div key={index}><ProductCard productName={product.name} price={product.price} quantity={product.quantity} color={product.color} sku={product.sku}/></div>), [products])
 
@@ -60,7 +48,7 @@ const Homepage = ({products})=>{
             <div style={{ position: 'fixed', top: 90 }}>
             <div>Rendered: {count.current}</div> 
             {/* Renderchecker */}
-                 <Filter filters={handleFilter}/>
+                 <Filter />
             </div>
             <div style={{ position: 'absolute', left: 300, top: 90}}>
                 {<Grid arr={arr}/>}

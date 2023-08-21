@@ -1,8 +1,10 @@
 import { UPDATE_STORE, GET_STORE_WITH_FILTERS } from "../enums";
 import data from '../../data/data.json';
 
+const fulldata=data
+
 const initialState = {
-  products: data
+  products: fulldata
 };
 
 const storeReducer = (state = initialState, action) => {
@@ -22,9 +24,14 @@ const storeReducer = (state = initialState, action) => {
       return { ...state, products: updatedProducts }; // Return the updated state
 
     case GET_STORE_WITH_FILTERS:
+
+      if (!action.payload.name){
+        return {...state, products: fulldata}
+      }
       return {
         ...state,
         products: state.products.filter(product => {
+          console.log(action.payload.minPrice, action.payload.maxPrice)
           return (
             (!action.payload.name || product.name.includes(action.payload.name)) &&
             (!action.payload.minPrice || product.price >= action.payload.minPrice) &&

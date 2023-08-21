@@ -16,7 +16,7 @@ import {useRef, useEffect, useState, useMemo} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import {updateBill, clearCart} from '../../redux/CombinedActions'
+import {updateBill, clearCart, updateStore} from '../../redux/CombinedActions'
 
 function createData(name, price, quantity) {
   return { name, price, quantity };
@@ -24,7 +24,7 @@ function createData(name, price, quantity) {
 
 
 
-function ShoppingCart({Cart, updateBill, clearCart}) {
+function ShoppingCart({Cart, updateBill, clearCart, updateStore}) {
    // Renderchecker
    const count = useRef(0);
    useEffect(() => {
@@ -43,6 +43,7 @@ function ShoppingCart({Cart, updateBill, clearCart}) {
 
    const handleNavigate=()=>{
     if (sum !==0){
+      updateStore(Cart)
       updateBill(new Date().toLocaleDateString(), sum)
       clearCart()
       navigate('/checkout')
@@ -95,7 +96,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   updateBill,
-  clearCart
+  clearCart,
+  updateStore
 };
 
 export default Layout(

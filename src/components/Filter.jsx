@@ -8,27 +8,35 @@ import {
 } from "@mui/material";
 import {useEffect, useRef, useState} from 'react'
 
-const Filter = ({filters}) => {
+import {connect} from 'react-redux'
+import {getStoreWithFilters} from '../redux/actions/StoreActions'
+
+const Filter = ({getStoreWithFilters}) => {
 
   // Renderchecker
   const [name, setName] = useState("");
   const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(2000);
   const [colors, setColors] = useState([]);
 
   const count = useRef(0);
   useEffect(() => {
       count.current = count.current + 1;
-      filters(name, minPrice, maxPrice, colors)
+     
   });
 
+
+  useEffect(()=>{
+    console.log(name, minPrice, maxPrice)
+    getStoreWithFilters(name, minPrice, maxPrice)
+  },[name, minPrice, maxPrice])
 
 
   return (
     <Box
       sx={{
         width: 250,
-        height: 510,
+        height: 550,
         backgroundColor: "#d3d3d3",
         borderRadius: 2,
         marginRight: 5,
@@ -74,6 +82,7 @@ const Filter = ({filters}) => {
           marginLeft: 3,
         }}
         value={name}
+        onChange={(e) => setName(e.target.value)}
       />
 
       <Typography
@@ -115,6 +124,14 @@ const Filter = ({filters}) => {
           }}
           type="number"
           value={minPrice}
+          onChange={(e) => {
+            if (isNaN(e.target.value)){
+              setMinPrice(0)
+            }
+            else{
+              setMinPrice(parseFloat(e.target.value))
+            }
+          }}
         />
       </Box>
 
@@ -148,6 +165,14 @@ const Filter = ({filters}) => {
           }}
           type="number"
           value={maxPrice}
+          onChange={(e) => {
+          if (isNaN(e.target.value)){
+            console.log("here")
+            setMaxPrice(0)
+          }
+          else{
+            setMaxPrice(parseFloat(e.target.value))
+          }}}
         />
       </Box>
 
@@ -171,31 +196,40 @@ const Filter = ({filters}) => {
           sx={{mb:-2}}
           control={<Checkbox defaultChecked />}
           label="Red"
+          value="Red"
         />
         <FormControlLabel
           sx={{mb:-2}}
           control={<Checkbox defaultChecked />}
           label="Green"
+          value="Green"
         />
         <FormControlLabel
           sx={{mb:-2}}
           control={<Checkbox defaultChecked/>}
           label="Blue"
+          value="Blue"
         />
         <FormControlLabel
           sx={{mb:-2}}
           control={<Checkbox defaultChecked />}
           label="Yellow"
+          value="Yellow"
         />
 
         <FormControlLabel
           sx={{mb:-2}}
           control={<Checkbox defaultChecked />}
           label="Purple"
+          value="Purple"
         />
       </FormGroup>
     </Box>
   );
 };
 
-export default Filter;
+const mapDispatchToProps = {
+  getStoreWithFilters
+}
+
+export default connect(null, mapDispatchToProps)(Filter);
