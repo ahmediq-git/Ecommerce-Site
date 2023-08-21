@@ -1,10 +1,5 @@
-import {GET_STORE, UPDATE_STORE, GET_STORE_WITH_FILTERS} from '../enums';
+import { UPDATE_STORE, GET_STORE_WITH_FILTERS} from '../enums';
 
-export const getItems = () => {
-  return {
-    type: GET_STORE,
-  };
-};
 
 export const updateStore = (cart) => {
   return {

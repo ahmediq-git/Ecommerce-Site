@@ -1,7 +1,20 @@
 import { Card, Box, Typography } from "@mui/material";
 import { ItemImages } from "../utils/ImageExport";
+import {Link, useNavigate, createSearchParams} from 'react-router-dom'
+import {startTransition, useCallback} from 'react'
+
 
 const ProductCard = (props) => {
+  const navigate=useNavigate();
+  
+  const params= {productName: props.productName, price: props.price, sku: props.sku, quantity: props.quantity, color:props.color}
+
+  const handleClick=()=>{
+    startTransition(()=>{
+      navigate({pathname: '/product-page', search:`?${createSearchParams(params)}`})
+    })  
+  }
+
   return (
     <div>
       <Card
@@ -35,10 +48,12 @@ const ProductCard = (props) => {
               borderBottomLeftRadius: 3,
             }}
           />
+
           <Typography sx={{ fontSize: 14, fontWeight: "bold" }}>
             {props.productName}
           </Typography>
           <Typography sx={{fontSize: 12}}>{props.price} PKR</Typography>
+          <a onClick={handleClick} style={{color:'#58A422', textDecorationLine:'underline'}}>Click Here</a>
         </Box>
       </Card>
     </div>

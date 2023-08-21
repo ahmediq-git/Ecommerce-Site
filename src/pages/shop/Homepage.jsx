@@ -1,12 +1,10 @@
 import Layout from '../../components/Layout'
 import Filter from '../../components/Filter'
 import ProductCard from '../../components/ProductCard'
-import {useState, useRef, useEffect} from 'react'
+import {useState, useRef, useEffect, useMemo} from 'react'
 
 import {connect} from 'react-redux'
-import {getItems} from '../../redux/CombinedActions'
 
-import {useDispatch, useSelector} from 'react-redux'
 
 const GridDisplay = ({ arr }) => {
     const gridContainerStyle = {
@@ -51,10 +49,11 @@ const Homepage = ({products})=>{
         setMax(maxPrice)
         setColors(colors)
     }
-    console.log(products)
-    const arr=products.map((product, index)=><div key={index}><ProductCard productName={product.name} price={product.price}/></div>)
 
-    // console.log(arr)
+    const arr=useMemo(()=>products.map((product, index)=><div key={index}><ProductCard productName={product.name} price={product.price} quantity={product.quantity} color={product.color} sku={product.sku}/></div>), [products])
+
+    const Grid=useMemo(()=>GridDisplay, [arr])
+
     return(
         <div style={{ display: 'flex', margin: 20, flexDirection: 'row' }}>
 
@@ -64,7 +63,7 @@ const Homepage = ({products})=>{
                  <Filter filters={handleFilter}/>
             </div>
             <div style={{ position: 'absolute', left: 300, top: 90}}>
-                {<GridDisplay arr={arr}/>}
+                {<Grid arr={arr}/>}
             </div>
         </div>
     );

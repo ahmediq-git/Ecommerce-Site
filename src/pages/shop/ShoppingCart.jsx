@@ -12,24 +12,46 @@ import {
   Button
 } from "@mui/material";
 
-import {useRef, useEffect} from 'react'
+import {useRef, useEffect, useState, useMemo} from 'react'
+import {useNavigate} from 'react-router-dom'
+import {connect} from 'react-redux'
+
+import {updateBill, clearCart} from '../../redux/CombinedActions'
 
 function createData(name, price, quantity) {
   return { name, price, quantity };
 }
 
-const rows = [
-  createData("abc", '123', 43),
-  createData("abc", '123', 43),
-  createData("abc", '123', 43),
-];
 
-function ShoppingCart() {
+
+function ShoppingCart({Cart, updateBill, clearCart}) {
    // Renderchecker
    const count = useRef(0);
    useEffect(() => {
        count.current = count.current + 1;
    });
+
+   const [rows, setRows] = useState([])
+
+   useEffect(() => {
+     setRows(Cart.map((item)=>createData(item.name, item.price, item.quantity)))
+   },[])
+
+   const sum=useMemo(()=>rows.reduce((acc, cur)=>acc+cur.price*cur.quantity, 0), [rows])
+
+   const navigate=useNavigate();
+
+   const handleNavigate=()=>{
+    if (sum !==0){
+      updateBill(new Date().toLocaleDateString(), sum)
+      clearCart()
+      navigate('/checkout')
+    }
+
+    }
+   
+  
+
   return (
     <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop: 100, flexDirection:'column'}}>
     <h1>Shopping Cart</h1>
@@ -58,12 +80,24 @@ function ShoppingCart() {
         </TableBody>
       </Table>
     </TableContainer>
-    <Typography sx={{marginTop:3}}>Total Cost: 123</Typography>
-    <Button variant="contained" sx={{marginTop:3, backgroundColor: '#FFA500'}}>Proceed to Checkout</Button>
+    <Typography sx={{marginTop:3}}>Total Cost: {sum} PKR</Typography>
+    <Button variant="contained" sx={{marginTop:3, backgroundColor: '#FFA500'}} onClick={handleNavigate}>Proceed to Checkout</Button>
     <div>Rendered: {count.current}</div> 
     {/* Renderchecker */}
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    Cart: state.cart.cart,
+  };
+};
 
-export default Layout(ShoppingCart);
+const mapDispatchToProps = {
+  updateBill,
+  clearCart
+};
+
+export default Layout(
+  connect(mapStateToProps, mapDispatchToProps)(ShoppingCart)
+);

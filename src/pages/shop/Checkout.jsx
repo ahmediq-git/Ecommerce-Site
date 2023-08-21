@@ -11,24 +11,29 @@ import {
   Typography,
   Button
 } from "@mui/material";
-import {useRef, useEffect} from 'react'
+import {useRef, useEffect, useState} from 'react'
 
-function createData(date, totalprice) {
-  return { date, totalprice };
+import {connect} from 'react-redux'
+
+function createData(date, price) {
+  return { date, price };
 }
 
-const rows = [
-  createData("12/12/2023", '123'),
-];
 
-function Checkout() {
+function Checkout({Bills}) {
   // Renderchecker
   const count = useRef(0);
   useEffect(() => {
       count.current = count.current + 1;
   });
 
+
+  const [rows, setRows] = useState([])
   
+  useEffect(() => {
+    setRows(Bills.map((item)=>createData(item.date, item.price)))
+  },[Bills])
+
   return (
     <div style={{display:'flex', justifyContent:'center', alignItems:'center', marginTop: 100, flexDirection:'column'}}>
     <h2 style={{color: "#660000"}}>Thank you for shopping with us</h2>
@@ -50,7 +55,7 @@ function Checkout() {
               <TableCell component="th" scope="row">
                 {row.date}
               </TableCell>
-              <TableCell align="right">{row.totalprice}</TableCell>
+              <TableCell align="right">{row.price}</TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -63,4 +68,15 @@ function Checkout() {
   );
 }
 
-export default Layout(Checkout);
+const mapStateToProps = (state) => {
+  return {
+    Bills: state.bills.bills,
+  };
+};
+
+
+
+// add mapDispatchToProps
+export default Layout(
+  connect(mapStateToProps)(Checkout)
+);

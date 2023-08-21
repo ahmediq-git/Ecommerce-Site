@@ -30,14 +30,14 @@ def generateProduct():
     product_name = random.choice(product_list)
     product_color = random.choice(color)
     product_price = generatePrice(10.00, 200.00)
-    available_quantity = random.randint(0, 10)
+    quantity = random.randint(0, 10)
     sku = ''.join(random.choices('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890', k=8))
     
     product = {
         "name": product_name,
         "color": product_color,
         "price": product_price,
-        "available_quantity": available_quantity,
+        "quantity": quantity,
         "sku": sku
     }
     

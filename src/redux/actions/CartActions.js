@@ -1,27 +1,36 @@
-import {ADD_TO_CART, REMOVE_FROM_CART, GET_CART} from '../enums';
+import {ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART } from '../enums';
 
 // Adds sku to cart, if sku is already in cart, it will increase the quantity
-export const addToCart = (sku) => {
+export const addToCart = (sku, productName, color, availableQuantity, price) => {
   return {
     type: ADD_TO_CART,
     payload:{
-        sku
+        sku,
+        productName, 
+        color,
+        availableQuantity,
+        price
     }
   };
 };
 
 // Removes sku from cart if 0, else increments
-export const removeFromCart = (sku) => {
+export const removeFromCart = (sku, productName, color, availableQuantity, price) => {
     return {
       type: REMOVE_FROM_CART,
       payload:{
-          sku
+        sku,
+        productName, 
+        color,
+        availableQuantity,
+        price
       }
     };
   };
 
-  export const getCart = () => {
-    return {
-      type: GET_CART
-    };
-  };
+
+export const clearCart = () =>{
+  return {
+    type: CLEAR_CART
+  }
+}

@@ -1,4 +1,4 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, GET_CART } from "../enums";
+import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART } from "../enums";
 import {searchObject} from '../../utils/searchObject.js'
 import data from '../../data/data.json'
 
@@ -9,12 +9,14 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      let foundobj= searchObject(data, 'sku', action.payload.sku)
+      // let foundobj= searchObject(data, 'sku', action.payload.sku)
+
+      let foundobj= searchObject(state.cart, 'sku', action.payload.sku)
 
       // TODO: TEST FOR CORRECTNESS
       // not found
-      if (!foundobj){
-        let newCartEntry={name: foundobj.name, quantity:1, price: foundobj.price, sku: foundobj.sku}
+      if (!foundobj && action.payload.availableQuantity>0){
+        let newCartEntry={name: action.payload.productName, quantity:1, price: action.payload.price, sku: action.payload.sku, color: action.payload.color, available: action.payload.availableQuantity}
         return {
           ...state,
           cart:  [...state.cart, newCartEntry],
@@ -25,13 +27,14 @@ const cartReducer = (state = initialState, action) => {
         ...state,
         cart: state.cart.map(item => {
           if (item.sku === action.payload.sku) {
-            if (item.quantity<=foundobj.available_quantity){
+            if (item.quantity < item.available){
               return {
                 ...item,
                 quantity: item.quantity + 1,
               };
             }
           }
+
           return item;
         }),
       };
@@ -52,9 +55,12 @@ const cartReducer = (state = initialState, action) => {
           return item;
         }).filter(item => item !== null ),
       }
-
-    case GET_CART:
-      return state.cart; 
+    
+    case CLEAR_CART:
+      return {
+        ...state,
+        cart: []
+      }
 
     default:
       return state;

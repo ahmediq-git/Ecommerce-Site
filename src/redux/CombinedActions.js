@@ -1,2 +1,3 @@
-export {addToCart, removeFromCart, getCart } from './actions/CartActions';
-export {getItems, updateStore, getStoreWithFilters} from './actions/StoreActions';
+export {addToCart, removeFromCart, clearCart} from './actions/CartActions';
+export {updateStore, getStoreWithFilters} from './actions/StoreActions';
+export {updateBill} from './actions/BillsActions'

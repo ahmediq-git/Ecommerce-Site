@@ -27,6 +27,7 @@ function App() {
   return (
     <div className="App">
        <ErrorBoundary>
+      <Suspense fallback={<HomepageSkeleton/>}>
       <Router>
         <Routes>
           <Route
@@ -85,6 +86,7 @@ function App() {
           />
         </Routes>
       </Router>
+      </Suspense>
       </ErrorBoundary>
     </div>
   );

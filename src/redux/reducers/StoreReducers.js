@@ -1,4 +1,4 @@
-import { GET_STORE, UPDATE_STORE, GET_STORE_WITH_FILTERS } from "../enums";
+import { UPDATE_STORE, GET_STORE_WITH_FILTERS } from "../enums";
 import data from '../../data/data.json';
 
 const initialState = {
@@ -7,11 +7,6 @@ const initialState = {
 
 const storeReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_STORE:
-      // console.log(state)
-      console.log(state.products)
-      return state;
-
     case UPDATE_STORE:
       // It's better to create a new copy of the state and modify that instead of modifying the original state directly
       const updatedProducts = state.products.map(product => {
@@ -19,7 +14,7 @@ const storeReducer = (state = initialState, action) => {
         if (matchingCartItem) {
           return {
             ...product,
-            available_quantity: product.available_quantity - matchingCartItem.quantity
+            quantity: product.quantity - matchingCartItem.quantity
           };
         }
         return product;
