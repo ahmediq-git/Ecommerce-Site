@@ -1,12 +1,11 @@
 import axios from "axios";
 
-export async function getStaticProps() {
-  const res = await axios.get("https://fakestoreapi.com/products");
-  const data = await res.json();
+export async function fetchData() {
+  return await axios.get('https://fakestoreapi.com/products')
+    .then(response => {
+      return response.data
 
-  return {
-    props: {
-      data,
-    },
-  };
+    }).catch(error => {
+      throw error.response.data
+    })
 }

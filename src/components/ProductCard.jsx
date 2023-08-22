@@ -1,5 +1,5 @@
 import { Card, Box, Typography } from "@mui/material";
-import { ItemImages } from "../utils/ImageExport";
+// import { ItemImages } from "../utils/ImageExport";
 import { Link, useNavigate, createSearchParams } from 'react-router-dom'
 import { startTransition, useCallback } from 'react'
 
@@ -7,11 +7,11 @@ import { startTransition, useCallback } from 'react'
 const ProductCard = (props) => {
   const navigate = useNavigate();
 
-  const params = { productName: props.productName, price: props.price, sku: props.sku, quantity: props.quantity, color: props.color }
+  const params = { productName: props.productName, price: props.price, sku: props.sku, quantity: props.quantity, color: props.color, image: props.image }
 
   const handleClick = () => {
     startTransition(() => {
-      navigate({ pathname: '/product-page', search: `?${createSearchParams(params)}` })
+      navigate({ pathname: '/product-page', search: `?${createSearchParams(params)}` } )
     })
   }
 
@@ -39,7 +39,7 @@ const ProductCard = (props) => {
           }}
         >
           <img
-            src={ItemImages[props.productName]}
+            src={props.image}
             style={{
               width: 100,
               height: 100,

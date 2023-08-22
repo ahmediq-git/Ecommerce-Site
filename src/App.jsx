@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "./pages/error-boundary/ErrorBoundary";
+import AxiosConfiguration from "./AxiosConfiguration";
+import {loadData} from './loaders/loadData'
 
 const Homepage = lazy(() => import("./pages/shop/Homepage"));
 const Landing = lazy(() => import("./pages/Landing/Landing"));
@@ -25,6 +27,8 @@ const HomepageSkeleton = lazy(() =>
 
 const Error404 = lazy(()=>import("./pages/error-boundary/DNE"))
 
+AxiosConfiguration()
+
 function App() {
   return (
     <div className="App">
@@ -46,9 +50,10 @@ function App() {
             path="/homepage"
             element={
               <Suspense fallback={<HomepageSkeleton />}>
-                <Homepage />
+                <Homepage loader={loadData} />
               </Suspense>
             }
+
           />
           <Route
             exact
