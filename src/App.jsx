@@ -23,10 +23,12 @@ const HomepageSkeleton = lazy(() =>
   import("./pages/skeleton/HomepageSkeleton")
 );
 
+const Error404 = lazy(()=>import("./pages/error-boundary/DNE"))
+
 function App() {
   return (
     <div className="App">
-       <ErrorBoundary>
+      <ErrorBoundary>
       <Suspense fallback={<HomepageSkeleton/>}>
       <Router>
         <Routes>
@@ -81,6 +83,14 @@ function App() {
             element={
               <Suspense fallback={<LandingSkeleton />}>
                 <ErrorPage />
+              </Suspense>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <Suspense fallback={<LandingSkeleton />}>
+                <Error404 />
               </Suspense>
             }
           />

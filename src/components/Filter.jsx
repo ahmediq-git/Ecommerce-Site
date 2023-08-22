@@ -6,12 +6,12 @@ import {
   FormControlLabel,
   Checkbox,
 } from "@mui/material";
-import {useEffect, useRef, useState} from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import {connect} from 'react-redux'
-import {getStoreWithFilters} from '../redux/actions/StoreActions'
+import { connect } from 'react-redux'
+import { getStoreWithFilters } from '../redux/actions/StoreActions'
 
-const Filter = ({getStoreWithFilters}) => {
+const Filter = ({ getStoreWithFilters }) => {
 
   // Renderchecker
   const [name, setName] = useState("");
@@ -21,16 +21,23 @@ const Filter = ({getStoreWithFilters}) => {
 
   const count = useRef(0);
   useEffect(() => {
-      count.current = count.current + 1;
-     
+    count.current = count.current + 1;
+
   });
 
+  useEffect(() => {
+    getStoreWithFilters(name, minPrice, maxPrice, colors)
+  }, [name, minPrice, maxPrice, colors])
 
-  useEffect(()=>{
-    console.log(name, minPrice, maxPrice)
-    getStoreWithFilters(name, minPrice, maxPrice)
-  },[name, minPrice, maxPrice])
-
+  const handleColorChange = (color) => {
+    setColors((prevSelectedColors) => {
+      if (prevSelectedColors.includes(color)) {
+        return prevSelectedColors.filter((c) => c !== color);
+      } else {
+        return [...prevSelectedColors, color];
+      }
+    });
+  };
 
   return (
     <Box
@@ -42,8 +49,8 @@ const Filter = ({getStoreWithFilters}) => {
         marginRight: 5,
       }}
     >
-               <div>Rendered: {count.current}</div> 
-                {/* Renderchecker */}
+      <div>Rendered: {count.current}</div>
+      {/* Renderchecker */}
       <Typography
         sx={{
           color: "black",
@@ -125,10 +132,10 @@ const Filter = ({getStoreWithFilters}) => {
           type="number"
           value={minPrice}
           onChange={(e) => {
-            if (isNaN(e.target.value)){
+            if (isNaN(e.target.value)) {
               setMinPrice(0)
             }
-            else{
+            else {
               setMinPrice(parseFloat(e.target.value))
             }
           }}
@@ -166,13 +173,14 @@ const Filter = ({getStoreWithFilters}) => {
           type="number"
           value={maxPrice}
           onChange={(e) => {
-          if (isNaN(e.target.value)){
-            console.log("here")
-            setMaxPrice(0)
-          }
-          else{
-            setMaxPrice(parseFloat(e.target.value))
-          }}}
+            if (isNaN(e.target.value)) {
+              console.log("here")
+              setMaxPrice(0)
+            }
+            else {
+              setMaxPrice(parseFloat(e.target.value))
+            }
+          }}
         />
       </Box>
 
@@ -191,37 +199,42 @@ const Filter = ({getStoreWithFilters}) => {
         Color
       </Typography>
 
-      <FormGroup sx={{marginLeft:10}}>
+      <FormGroup sx={{ marginLeft: 10 }}>
         <FormControlLabel
-          sx={{mb:-2}}
-          control={<Checkbox defaultChecked />}
+          sx={{ mb: -2 }}
+          control={<Checkbox />}
           label="Red"
           value="Red"
+          onChange={() => { handleColorChange("Red") }}
         />
         <FormControlLabel
-          sx={{mb:-2}}
-          control={<Checkbox defaultChecked />}
+          sx={{ mb: -2 }}
+          control={<Checkbox />}
           label="Green"
           value="Green"
+          onChange={() => { handleColorChange("Red") }}
         />
         <FormControlLabel
-          sx={{mb:-2}}
-          control={<Checkbox defaultChecked/>}
+          sx={{ mb: -2 }}
+          control={<Checkbox />}
           label="Blue"
           value="Blue"
+          onChange={() => { handleColorChange("Blue") }}
         />
         <FormControlLabel
-          sx={{mb:-2}}
-          control={<Checkbox defaultChecked />}
+          sx={{ mb: -2 }}
+          control={<Checkbox />}
           label="Yellow"
           value="Yellow"
+          onChange={() => { handleColorChange("Yellow") }}
         />
 
         <FormControlLabel
-          sx={{mb:-2}}
-          control={<Checkbox defaultChecked />}
+          sx={{ mb: -2 }}
+          control={<Checkbox />}
           label="Purple"
           value="Purple"
+          onChange={() => { handleColorChange("Purple") }}
         />
       </FormGroup>
     </Box>

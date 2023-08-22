@@ -25,21 +25,35 @@ const storeReducer = (state = initialState, action) => {
 
     case GET_STORE_WITH_FILTERS:
 
-      if (!action.payload.name){
-        return {...state, products: fulldata}
+      const { name, minPrice, maxPrice, colors } = action.payload;
+
+      // If any filter value is missing or falsy, reset to initial state
+      if (name === undefined || minPrice === undefined || maxPrice === undefined || colors === undefined || colors.length===0) {
+        return initialState;
       }
-      return {
-        ...state,
-        products: state.products.filter(product => {
-          console.log(action.payload.minPrice, action.payload.maxPrice)
-          return (
-            (!action.payload.name || product.name.includes(action.payload.name)) &&
-            (!action.payload.minPrice || product.price >= action.payload.minPrice) &&
-            (!action.payload.maxPrice || product.price <= action.payload.maxPrice) &&
-            (!action.payload.colors || action.payload.colors.includes(product.color))
-          );
-        })
-      }; 
+      
+      let filteredProducts = fulldata; // Start with all data
+      
+      if (name) {
+        filteredProducts = filteredProducts.filter(product => product.name.includes(name));
+      }
+      
+      filteredProducts = filteredProducts.filter(product => {
+        const parsedMinPrice = parseFloat(minPrice);
+        const parsedMaxPrice = parseFloat(maxPrice);
+      
+        const minPriceMatch = isNaN(parsedMinPrice) || product.price >= parsedMinPrice;
+        const maxPriceMatch = isNaN(parsedMaxPrice) || product.price <= parsedMaxPrice;
+        const colorsMatch = !colors || colors.includes(product.color);
+      
+        return minPriceMatch && maxPriceMatch && colorsMatch;
+      });
+    
+    return {
+      ...state,
+      products: filteredProducts
+    };
+    
 
     default:
       return state;

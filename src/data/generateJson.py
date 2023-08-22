@@ -21,7 +21,7 @@ product_list = [
     "Aromatherapy Essential Oil Diffuser"
 ]
 
-color = ['red', 'green', 'blue', 'yellow', 'purple']
+color = ['Red', 'Green', 'Blue', 'Yellow', 'Purple']
 
 def generatePrice(min_price, max_price):
     return round(random.uniform(min_price, max_price), 2)

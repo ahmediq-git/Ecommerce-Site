@@ -1,6 +1,5 @@
 import Layout from "../../components/Layout";
 import {
-  Box,
   Table,
   TableBody,
   TableCell,
@@ -12,7 +11,7 @@ import {
   Button
 } from "@mui/material";
 
-import {useRef, useEffect, useState, useMemo} from 'react'
+import {useRef, useEffect, useState, useMemo, useCallback} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {connect} from 'react-redux'
 
@@ -41,7 +40,7 @@ function ShoppingCart({Cart, updateBill, clearCart, updateStore}) {
 
    const navigate=useNavigate();
 
-   const handleNavigate=()=>{
+   const handleNavigate=useCallback(()=>{
     if (sum !==0){
       updateStore(Cart)
       updateBill(new Date().toLocaleDateString(), sum)
@@ -49,7 +48,7 @@ function ShoppingCart({Cart, updateBill, clearCart, updateStore}) {
       navigate('/checkout')
     }
 
-    }
+    }, [Cart,sum])
    
   
 

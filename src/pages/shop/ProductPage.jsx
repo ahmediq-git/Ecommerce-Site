@@ -2,12 +2,10 @@ import { Typography, Button } from "@mui/material";
 import { ItemImages } from "../../utils/ImageExport";
 import Layout from "../../components/Layout";
 import { useRef, useEffect, useState, useMemo } from "react";
-
 import { useSearchParams, useLocation } from "react-router-dom";
-
 import { connect } from "react-redux";
 import { addToCart, removeFromCart } from "../../redux/actions/CartActions";
-import { searchObject } from "../../utils/searchObject";
+
 
 const ProductPage = ({ addToCart, removeFromCart, Cart }) => {
   // Renderchecker
@@ -27,8 +25,6 @@ const ProductPage = ({ addToCart, removeFromCart, Cart }) => {
   const quantity = routeParams.get("quantity");
   const sku = routeParams.get("sku");
 
-
-  const [curQty, setCurQty]=useState(0)
 
   const result=useMemo(()=>Cart.find((item)=>item.sku===sku), [Cart])
 
@@ -103,12 +99,7 @@ const ProductPage = ({ addToCart, removeFromCart, Cart }) => {
           </Button>
         </div>
 
-        {/* <Button
-          variant="contained"
-          sx={{ fontSize: 16, fontWeight: "bold", backgroundColor: "#FFA500" }}
-        >
-          Add to Cart
-        </Button> */}
+      
         <div>Rendered: {count.current}</div>
         {/* Renderchecker */}
       </div>
