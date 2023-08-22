@@ -1,11 +1,16 @@
 import { UPDATE_STORE, GET_STORE_WITH_FILTERS } from "../enums";
-import data from '../../data/data.json';
+import { fetchData } from "../../api/retrieveData";
 
-const fulldata=data
+
+let fulldata=[]
+
+
+fetchData().then((data)=>{fulldata=data}).catch((error)=>{console.log(error)})
 
 const initialState = {
   products: fulldata
 };
+
 
 const storeReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -28,7 +33,9 @@ const storeReducer = (state = initialState, action) => {
       const { name, minPrice, maxPrice, colors } = action.payload;
 
       // If any filter value is missing or falsy, reset to initial state
+
       if (name === undefined || minPrice === undefined || maxPrice === undefined || colors === undefined || colors.length===0) {
+        console.log(initialState)
         return initialState;
       }
       

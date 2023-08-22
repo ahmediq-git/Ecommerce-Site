@@ -1,6 +1,5 @@
-import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART } from "../enums";
+import { ADD_TO_CART, REMOVE_FROM_CART, CLEAR_CART, CHANGE_CART } from "../enums";
 import {searchObject} from '../../utils/searchObject.js'
-import data from '../../data/data.json'
 
 const initialState = {
   cart: [],
@@ -55,7 +54,34 @@ const cartReducer = (state = initialState, action) => {
           return item;
         }).filter(item => item !== null ),
       }
-    
+    case CHANGE_CART:
+      let foundobjcart= searchObject(state.cart, 'sku', action.payload.sku)
+
+      // not found
+      if (!foundobjcart && action.payload.availableQuantity>0){
+        let newCartEntry={name: action.payload.productName, quantity:action.payload.quantity, price: action.payload.price, sku: action.payload.sku, color: action.payload.color, available: action.payload.availableQuantity}
+        return {
+          ...state,
+          cart:  [...state.cart, newCartEntry],
+        }
+      }
+
+      return {
+        ...state,
+        cart: state.cart.map(item => {
+          if (item.sku === action.payload.sku) {
+            if (action.payload.quantity>0 && action.payload.quantity<=item.available){
+              return {
+                ...item,
+                quantity: action.payload.quantity,
+              };
+            }
+            return null
+          }
+          return item;
+        }).filter(item => item !== null ),
+    }
+
     case CLEAR_CART:
       return {
         ...state,

@@ -15,9 +15,9 @@ const Filter = ({ getStoreWithFilters }) => {
 
   // Renderchecker
   const [name, setName] = useState("");
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(2000);
-  const [colors, setColors] = useState([]);
+  const [minPrice, setMinPrice] = useState('');
+  const [maxPrice, setMaxPrice] = useState('');
+  const [colors, setColors] = useState(["Red", "Green", "Purple", "Yellow", "Blue"]);
 
   const count = useRef(0);
   useEffect(() => {
@@ -26,8 +26,10 @@ const Filter = ({ getStoreWithFilters }) => {
   });
 
   useEffect(() => {
+
     getStoreWithFilters(name, minPrice, maxPrice, colors)
   }, [name, minPrice, maxPrice, colors])
+
 
   const handleColorChange = (color) => {
     setColors((prevSelectedColors) => {
@@ -202,28 +204,28 @@ const Filter = ({ getStoreWithFilters }) => {
       <FormGroup sx={{ marginLeft: 10 }}>
         <FormControlLabel
           sx={{ mb: -2 }}
-          control={<Checkbox />}
+          control={<Checkbox checked={colors.includes("Red")} />}
           label="Red"
           value="Red"
           onChange={() => { handleColorChange("Red") }}
         />
         <FormControlLabel
           sx={{ mb: -2 }}
-          control={<Checkbox />}
+          control={<Checkbox checked={colors.includes("Green")} />}
           label="Green"
           value="Green"
-          onChange={() => { handleColorChange("Red") }}
+          onChange={() => { handleColorChange("Green") }}
         />
         <FormControlLabel
           sx={{ mb: -2 }}
-          control={<Checkbox />}
+          control={<Checkbox checked={colors.includes("Blue")} />}
           label="Blue"
           value="Blue"
           onChange={() => { handleColorChange("Blue") }}
         />
         <FormControlLabel
           sx={{ mb: -2 }}
-          control={<Checkbox />}
+          control={<Checkbox checked={colors.includes("Yellow")} />}
           label="Yellow"
           value="Yellow"
           onChange={() => { handleColorChange("Yellow") }}
@@ -231,7 +233,7 @@ const Filter = ({ getStoreWithFilters }) => {
 
         <FormControlLabel
           sx={{ mb: -2 }}
-          control={<Checkbox />}
+          control={<Checkbox checked={colors.includes("Purple")} />}
           label="Purple"
           value="Purple"
           onChange={() => { handleColorChange("Purple") }}
